@@ -8,6 +8,7 @@ export const DummyPipeline = class DummyPipeline {
         this.effects_manager = effects_manager;
         this.settings = settings;
         this.effect = null;
+        this.corner_effect = null;
         this.attach_effect_to_actor(actor);
     }
 
@@ -39,19 +40,22 @@ export const DummyPipeline = class DummyPipeline {
             return;
         }
 
-        // build the new effect to be added
+        // build the new effects to be added
         this.build_effect({
             unscaled_radius: 2 * this.settings.SIGMA,
             brightness: this.settings.BRIGHTNESS,
         });
+        this.corner_effect = this.effects_manager.new_corner_effect({ radius: 12 });
 
         this.actor_destroy_id = this.actor.connect(
             "destroy", () => this.remove_pipeline_from_actor()
         );
 
-        // add the effect to the actor
-        if (this.actor)
+        // add the effects to the actor
+        if (this.actor) {
             this.actor.add_effect(this.effect);
+            this.actor.add_effect(this.corner_effect);
+        }
         else
             this._warn(`could not add effect to actor, actor does not exist anymore`);
     }
@@ -86,7 +90,10 @@ export const DummyPipeline = class DummyPipeline {
     remove_effect() {
         if (this.effect)
             this.effects_manager.remove(this.effect);
+        if (this.corner_effect)
+            this.effects_manager.remove(this.corner_effect);
         this.effect = null;
+        this.corner_effect = null;
 
         if (this._sigma_changed_id)
             this.settings.settings.disconnect(this._sigma_changed_id);
