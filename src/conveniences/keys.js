@@ -155,6 +155,7 @@ export const DEPRECATED_KEYS = [
             { type: Type.C, name: "color" },
             { type: Type.D, name: "noise-amount" },
             { type: Type.D, name: "noise-lightness" },
+            { type: Type.I, name: "corner-radius" },
         ]
     },
     {
