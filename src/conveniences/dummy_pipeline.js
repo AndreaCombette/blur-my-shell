@@ -45,7 +45,13 @@ export const DummyPipeline = class DummyPipeline {
             unscaled_radius: 2 * this.settings.SIGMA,
             brightness: this.settings.BRIGHTNESS,
         });
-        this.corner_effect = this.effects_manager.new_corner_effect({ radius: 12 });
+        this.corner_effect = this.effects_manager.new_corner_effect({
+            radius: this.settings.CORNER_RADIUS ?? 12
+        });
+
+        // ensure the actor clips its content to the allocation so rounded
+        // corners cut the blurred texture correctly
+        this.actor.set_clip_to_allocation(true);
 
         this.actor_destroy_id = this.actor.connect(
             "destroy", () => this.remove_pipeline_from_actor()
@@ -79,6 +85,12 @@ export const DummyPipeline = class DummyPipeline {
         this._brightness_changed_id = this.settings.settings.connect(
             'changed::brightness', () => this.effect.brightness = this.settings.BRIGHTNESS
         );
+        if ('CORNER_RADIUS' in this.settings) {
+            this._corner_radius_changed_id = this.settings.settings.connect(
+                'changed::corner-radius',
+                () => this.corner_effect.radius = this.settings.CORNER_RADIUS
+            );
+        }
     }
 
     repaint_effect() {
@@ -99,8 +111,11 @@ export const DummyPipeline = class DummyPipeline {
             this.settings.settings.disconnect(this._sigma_changed_id);
         if (this._brightness_changed_id)
             this.settings.settings.disconnect(this._brightness_changed_id);
+        if (this._corner_radius_changed_id)
+            this.settings.settings.disconnect(this._corner_radius_changed_id);
         delete this._sigma_changed_id;
         delete this._brightness_changed_id;
+        delete this._corner_radius_changed_id;
     }
 
     /// Do nothing for this dummy pipeline.
