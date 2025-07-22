@@ -150,6 +150,10 @@ export const ApplicationsBlur = class ApplicationsBlur {
             meta_window, 'size-changed',
             _ => this.update_size(pid)
         );
+        this.connections.connect(
+            meta_window, 'position-changed',
+            _ => this.update_size(pid)
+        );
 
         // remove the blur when the window is unmanaged
         this.connections.connect(
@@ -306,11 +310,14 @@ export const ApplicationsBlur = class ApplicationsBlur {
                 blur_actor.hide();
                 this.set_window_opacity(window_actor, 255);
             }
+            if (meta_window)
+                this.update_size(meta_window.bms_pid);
         }
         // if we remove the focus and have blur, show it and make the window transparent
         else if (blur_actor) {
             blur_actor.show();
             this.set_window_opacity(window_actor, this.settings.applications.OPACITY);
+            this.update_size(meta_window.bms_pid);
         }
     }
 

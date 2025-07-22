@@ -55,6 +55,7 @@ export const KEYS = [
             { type: Type.B, name: "blur" },
             { type: Type.I, name: "sigma" },
             { type: Type.D, name: "brightness" },
+            { type: Type.I, name: "corner-radius" },
             { type: Type.I, name: "opacity" },
             { type: Type.B, name: "dynamic-opacity" },
             { type: Type.B, name: "blur-on-overview" },
