@@ -388,8 +388,8 @@ export const ApplicationsBlur = class ApplicationsBlur {
         return {
             x: (frame.x - buffer.x) / scale,
             y: (frame.y - buffer.y) / scale,
-            width: frame.width / scale,
-            height: frame.height / scale
+            width: buffer.width / scale,
+            height: buffer.height / scale
         };
     }
 
