@@ -366,6 +366,11 @@
             <default>1.</default>
             <summary>Brightness to use for the blur effect</summary>
         </key>
+        <!-- CORNER RADIUS -->
+        <key type="i" name="corner-radius">
+            <default>12</default>
+            <summary>Radius for the corner rounding effect</summary>
+        </key>
         <!-- COLOR -->
         <key type="(dddd)" name="color">
             <default>(0.,0.,0.,0.)</default>
