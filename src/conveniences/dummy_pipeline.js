@@ -49,6 +49,10 @@ export const DummyPipeline = class DummyPipeline {
             radius: this.settings.CORNER_RADIUS ?? 12
         });
 
+        // ensure the actor clips its content to the allocation so rounded
+        // corners cut the blurred texture correctly
+        this.actor.set_clip_to_allocation(true);
+
         this.actor_destroy_id = this.actor.connect(
             "destroy", () => this.remove_pipeline_from_actor()
         );

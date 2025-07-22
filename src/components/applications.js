@@ -176,6 +176,10 @@ export const ApplicationsBlur = class ApplicationsBlur {
                 blur_actor.y = allocation.y;
                 blur_actor.width = allocation.width;
                 blur_actor.height = allocation.height;
+
+                // ensure the clipped region matches the actor's geometry so the
+                // corner effect properly cuts the blurred texture
+                blur_actor.set_clip(0, 0, allocation.width, allocation.height);
             }
         } else
             // the pid was visibly not removed
@@ -384,8 +388,8 @@ export const ApplicationsBlur = class ApplicationsBlur {
         return {
             x: (frame.x - buffer.x) / scale,
             y: (frame.y - buffer.y) / scale,
-            width: buffer.width / scale,
-            height: buffer.height / scale
+            width: frame.width / scale,
+            height: frame.height / scale
         };
     }
 
