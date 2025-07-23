@@ -386,10 +386,10 @@ export const ApplicationsBlur = class ApplicationsBlur {
         let buffer = meta_window.get_buffer_rect();
 
         return {
-            x: (frame.x - buffer.x) / scale,
-            y: (frame.y - buffer.y) / scale,
-            width: buffer.width / scale,
-            height: buffer.height / scale
+            x: (frame.x - frame.x) / scale,
+            y: (frame.y - frame.y) / scale,
+            width: frame.width / scale,
+            height: frame.height / scale
         };
     }
 
